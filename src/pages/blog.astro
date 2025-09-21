@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-const pageTitle = "Home Page";
+const pageTitle = "My Blog";
 ---
 
 <html lang="en">
@@ -14,7 +14,13 @@ const pageTitle = "Home Page";
 	<body>
 		<a href="/astro-blog/">Home</a>
         <a href="/astro-blog/about/">About</a>
-		<a href="/astro-blog/blog/">Blog</a>
-		<h1>Hello World!</h1>
+        <a href="/astro-blog/blog/">Blog</a>
+		<h1>{pageTitle}</h1>
+        <p>This is where I will post about my journey learning Astro.</p>
+        <ul>
+            <li><a href="/astro-blog/posts/post-1/">Post 1</a></li>
+            <li><a href="/astro-blog/posts/post-2/">Post 2</a></li>
+            <li><a href="/astro-blog/posts/post-3/">Post 3</a></li>
+        </ul>
 	</body>
 </html>
