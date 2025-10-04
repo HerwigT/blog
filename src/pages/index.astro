@@ -1,21 +1,43 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import '../styles/global.css'
-const pageTitle = "Home Page";
+import BaseLayout from "../layouts/BaseLayout.astro"
+const pageTitle = "Home Page"
+const identity = {
+    firstName : "Herwig",
+    country: "Austria",
+    occupation: "Machine Learning Engineer",
+    hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
+};
+const techs = ["Python - data engineering and machine learning", "SQL - Postgres", "C# - WPF - Entity Framework", 'Azure - Azure Functions - Azure Machine Learning']
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-		<Header/>
-		<h1>Hello World!</h1>
-		<Footer/>
-	</body>
-</html>
+<BaseLayout pageTitle = {pageTitle}>
+	<h1>Hi, I'm {identity.firstName}!👋</h1>
+	<h2>
+		Data Engineer - Bouldering Enthusiast - Hobby Blogger
+	</h2>
+	<p>
+		With about three years of hands-on experience in the tech world, 
+		I've grown from building solutions as a C# developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. 
+		Alongside my technical focus, I have the rewarding role of interviewing and mentoring interns, 
+		helping guide their growth throughout their journey in our team.
+	</p>
+	<p>
+		Outside of work, you’ll often find me exploring new topics in programming and AI 
+		or venturing outdoors for hiking and bouldering sessions. 
+		I’m always keen to learn, challenge myself, and find new adventures - both professionally and personally.
+	</p>
+	<h3>Tech Stack</h3>
+	<ul>
+		{techs.map((tech) => <li class="skill">{tech}</li>)}
+	</ul>
+
+	<h3>Featured Projects</h3>
+	<ul>
+		<li class="skill"><a href="https://github.com/HerwigT/blog">Portfolio & Blogging</a></li>
+	</ul>
+
+	<h3>Recent Blog Posts</h3>
+	<ul>
+		<li class="skill">Coming SOON...</li>
+	</ul>
+</BaseLayout>
