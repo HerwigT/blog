@@ -4,12 +4,14 @@ import Social from "./Social.astro"
 
 <style>
   footer {
-    display: flex;
     margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 9999;
   }
 </style>
 
-<footer>
+<footer class="footer">
     <Social platform="LinkedIn" username="in/herwig-teufer", icon="linkedin"/>
     <Social platform="GitHub" username="HerwigT", icon="github"/>
 </footer>

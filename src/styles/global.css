@@ -1,5 +1,12 @@
+:root{
+  --main-bg: #f1f5f9;
+  --main-accent: #171717;
+  --main-bg-dark: var(--main-accent);
+  --main-accent-dark: var(--main-bg)
+}
+
 html {
-  background-color: #f1f5f9;
+  background-color: var(--main-bg);
   font-family: sans-serif;
 }
 
@@ -7,8 +14,8 @@ body {
   margin: 0 auto;
   width: 100%;
   max-width: 80ch;
-  padding: 1rem;
   line-height: 1.5;
+  padding: 0rem 1rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -27,12 +34,20 @@ h1 {
 /* nav styles */
 
 .menu {
-  background-color:#f1f5f9;
+  background-color:var(--main-bg);
   border: none;
-  color: #000000;
+  color: var(--main-accent);
   font-size: x-large;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   text-decoration: none;
+}
+
+.header{
+  background-color:var(--main-bg);
+}
+
+.footer{
+  background-color:var(--main-bg);
 }
 
 .nav-links {
@@ -47,7 +62,7 @@ h1 {
   padding: 0.5rem 1rem;
   text-decoration: none;
   font-size: x-large;
-  color: #000000;
+  color: var(--main-accent);
 }
 
 .nav-links a:hover,
@@ -76,4 +91,66 @@ h1 {
   .menu {
     display: none;
   }
+}
+
+
+/* tag styles */
+.tags a {
+    color: var(--main-accent);
+    text-decoration: none;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: .5em;
+    padding: .5em 1em;
+    font-size: 1.15em;
+    background-color: var(--main-bg);
+}
+
+/* dark mode */
+
+.dark .tag{
+  background-color: var(--main-bg-dark);
+}
+
+.dark .tags .a{
+  color: var(--main-accent-dark);
+}
+
+html.dark {
+  background-color: var(--main-bg-dark);
+  color: var(--main-accent-dark);
+}
+
+.dark .menu {
+  background-color: var(--main-bg-dark);
+  color: var(--main-accent-dark);
+}
+
+.dark .nav-links a:hover,
+.dark .nav-links a:focus {
+  transform: scale(1.10);
+}
+
+.dark .header{
+  background-color: var(--main-bg-dark);
+}
+
+.dark .nav-links a {
+  color: var(--main-accent-dark);
+}
+
+.dark a {
+  color: var(--main-accent-dark);
+}
+
+.dark .footer {
+  background-color: var(--main-bg-dark);
 }

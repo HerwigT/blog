@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
-title: 'My Third Blog Post'
+title: 'My Fourth Blog Post'
 author: 'Herwig'
 pubDate: 2025-10-04
-tags: ["astro", "blogging", "learning in public"]
+tags: ["blogging", "learning in public"]
 ---
 Not much to see yet---
 
