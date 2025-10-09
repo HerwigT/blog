@@ -1,98 +1,15 @@
-:root{
-  --main-bg: #f1f5f9;
-  --main-accent: #171717;
-  --main-bg-dark: var(--main-accent);
-  --main-accent-dark: var(--main-bg)
+@import "tailwindcss";
+
+@layer base{
+  h1 { @apply m-0 text-4xl py-4}
+  h2 { @apply m-0 text-2xl py-3}
+  h3 { @apply m-0 text-xl py-2}
+  p { @apply py-1.5}
 }
 
-html {
-  background-color: var(--main-bg);
-  font-family: sans-serif;
+@layer components{
+  .skill { @apply uppercase text-amber-200 py-0.5}
 }
-
-body {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 80ch;
-  line-height: 1.5;
-  padding: 0rem 1rem;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-h1 {
-  margin: 1rem 0;
-  font-size: 2.5rem;
-}
-
-
-/* nav styles */
-
-.menu {
-  background-color:var(--main-bg);
-  border: none;
-  color: var(--main-accent);
-  font-size: x-large;
-  padding: 1rem 1rem;
-  text-decoration: none;
-}
-
-.header{
-  background-color:var(--main-bg);
-}
-
-.footer{
-  background-color:var(--main-bg);
-}
-
-.nav-links {
-  width: 100%;
-  display: none;
-  margin: 0;
-}
-
-.nav-links a {
-  display: inline-block;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  font-size: x-large;
-  color: var(--main-accent);
-}
-
-.nav-links a:hover,
-.nav-links a:focus {
-  transform: scale(1.10);
-}
-
-:has(.menu[aria-expanded="true"]) .nav-links {
-  display: unset;
-}
-
-@media screen and (min-width: 636px) {
-  .nav-links {
-    margin: 0;
-    display: block;
-    position: static;
-    width: auto;
-    background: none;
-  }
-
-  .nav-links a {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-  }
-
-  .menu {
-    display: none;
-  }
-}
-
 
 /* tag styles */
 .tags a {
@@ -112,45 +29,4 @@ h1 {
     padding: .5em 1em;
     font-size: 1.15em;
     background-color: var(--main-bg);
-}
-
-/* dark mode */
-
-.dark .tag{
-  background-color: var(--main-bg-dark);
-}
-
-.dark .tags .a{
-  color: var(--main-accent-dark);
-}
-
-html.dark {
-  background-color: var(--main-bg-dark);
-  color: var(--main-accent-dark);
-}
-
-.dark .menu {
-  background-color: var(--main-bg-dark);
-  color: var(--main-accent-dark);
-}
-
-.dark .nav-links a:hover,
-.dark .nav-links a:focus {
-  transform: scale(1.10);
-}
-
-.dark .header{
-  background-color: var(--main-bg-dark);
-}
-
-.dark .nav-links a {
-  color: var(--main-accent-dark);
-}
-
-.dark a {
-  color: var(--main-accent-dark);
-}
-
-.dark .footer {
-  background-color: var(--main-bg-dark);
 }

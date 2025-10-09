@@ -1,6 +1,4 @@
-const menu = document.querySelector('.menu');
-
-menu.addEventListener('click', () => {
-  const isExpanded = menu.getAttribute('aria-expanded') === 'true';
-  menu.setAttribute('aria-expanded', !isExpanded);
-});
+let menuOpen = false;
+document.querySelector('button').onclick = () => {
+  document.getElementById('main-menu').classList.toggle('hidden')
+}

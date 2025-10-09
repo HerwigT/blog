@@ -1,11 +1,11 @@
 ---
 import {Icon} from 'astro-icon/components'
-import ThemeIcon from './ThemeIcon.astro'
+// import ThemeIcon from './ThemeIcon.astro'
 ---
 
-<div id="main-menu" class="nav-links">
-  <a href="/"><Icon name="home"/></a>
-  <a href="/blog/"><Icon name="blog"/></a>
-  <a href="/about/"><Icon name="address-card"/></a>
-  <ThemeIcon />
+<div id="main-menu" class="hidden md:flex bg-gray-50 dark:bg-gray-900 space-x-9">
+  <a class="text-gray-900 dark:text-gray-50 hover:scale-110 focus:scale-110 text-4xl inline-block " href="/"><Icon name="home"/></a>
+  <a class="text-gray-900 dark:text-gray-50 hover:scale-110 focus:scale-110 text-4xl inline-block" href="/blog/"><Icon name="blog"/></a>
+  <a class="text-gray-900 dark:text-gray-50 hover:scale-110 focus:scale-110 text-4xl inline-block" href="/about/"><Icon name="address-card"/></a>
+  <!-- <ThemeIcon /> disabled theme toggle-->
 </div>

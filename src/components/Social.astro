@@ -2,18 +2,6 @@
 import {Icon} from 'astro-icon/components'
 const { platform, username, icon } = Astro.props;
 ---
-<a href={`https://www.${platform}.com/${username}`}>
+<a class="hover:scale-110 focus:scale-110 py-2 text-gray-900 dark:text-gray-50 no-underline text-4xl inline-block" href={`https://www.${platform}.com/${username}`}>
     <Icon name={`${icon}`}/>
 </a>
-
-<style>
-  a {
-    padding: 0.5rem 1rem;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-size: xx-large;
-  }
-  a:hover{
-    transform: scale(1.10);
-  }
-</style>

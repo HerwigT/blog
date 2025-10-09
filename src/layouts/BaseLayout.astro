@@ -3,36 +3,17 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import '../styles/global.css'
 const {pageTitle} = Astro.props;
-const skillColor = "navy";
-const skillColorDark = "gold";
-const fontWeight = "bold";
-const textCase = "upperCase"
 ---
 
-<html lang="en">
+<html lang="en" class="font-sans-serif bg-gray-50 dark:bg-gray-900">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
-
-        <style is:global define:vars={{skillColor, fontWeight, textCase, skillColorDark}}>
-            .skill{
-                color: var(--skillColor);
-                font-weight: var(--fontWeight);
-                text-transform: var(--textCase);
-                
-            }
-			.dark .skill{
-                color: var(--skillColorDark);
-                font-weight: var(--fontWeight);
-                text-transform: var(--textCase);
-                
-            }
-        </style>
 	</head>
-	<body>
+	<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 flex px-4 min-h-screen md:max-w-2/5 flex-col mx-auto text-lg/6">
 		<Header/>
         <slot />
 		<Footer/>
