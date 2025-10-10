@@ -10,23 +10,3 @@
 @layer components{
   .skill { @apply uppercase text-amber-200 py-0.5}
 }
-
-/* tag styles */
-.tags a {
-    color: var(--main-accent);
-    text-decoration: none;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: .5em;
-    padding: .5em 1em;
-    font-size: 1.15em;
-    background-color: var(--main-bg);
-}

@@ -6,11 +6,11 @@ const { frontmatter } = Astro.props;
     <h1>{frontmatter.title}</h1>
     <p>Published on <b>{frontmatter.pubDate.toString().slice(0,10)}</b>, written by <b>{frontmatter.author}</b></p>
     <slot />
-    <div class="tags">
+    <div class="flex flex-wrap my-4">
         {frontmatter.tags.map((tag: string) => (
-            <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+            <p class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 text-xl mx-1 px-4 py-2 border-1 border-dotted rounded-lg"><a href={`/tags/${tag}`}>{tag}</a></p>
         ))}
     </div>
-    <a href="/blog">Back to blogs</a>
+    <a class='underline text-blue-700 dark:text-amber-600' href="/blog">Back to blogs</a>
 </BaseLayout>
 

@@ -5,40 +5,32 @@ import '../styles/global.css'
 const pageTitle = "About Me";
 const identity = {
     firstName : "Herwig",
+    city: "Vienna",
     country: "Austria",
-    occupation: "Machine Learning Engineer",
+    occupation: "Data Engineer",
     hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
 };
-
 const skills = ["Python", "Machine Learning", "Data Engineering"];
-
+const education = [["Medical University Vienna - Medical Computer Science - Master", "2021-2024"], ["TU Vienna - Medical Computer Science - Bachelor", "2017-2020"]]
+const experience = [["BD - Data Engineer", "2023-20XX"], ["ace Neue Informationstechnologien GmbH - Software Developer", "2021-2023"]]
 ---
-
-<style>
-    h1 {
-        color: purple;
-        font-size: 4rem;
-    }
-</style>
-
 <BaseLayout pageTitle = {pageTitle}>
     <h1>{pageTitle}</h1>
-    <h2>... and my new Astro site!</h2>
-
-    <p>I am working through Astro's introductory tutorial. This is the second page on my website, and it's the first one I built myself!</p>
-
-    <p>This site will update as I complete more of the tutorial, so keep checking back and see how my journey is going!</p>
-
-    <p>Here are a few facts about me:</p>
     <ul>
         <li>My name is {identity.firstName}.</li>
-        <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
+        <li>I live in {identity.city} ({identity.country}) and I work as a {identity.occupation}.</li>
         {identity.hobbies.length >= 2 &&
             <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
         }
     </ul>
-    <p>My skills are:</p>
+
+    <h2>Work experience</h2>
+    {experience.map((entry) =><div class="justify-between flex"><p>{entry[0]}</p><p>{entry[1]}</p></div>)}
+    <h2>Skills</h2>
     <ul>
         {skills.map((skill) => <li class="skill">{skill}</li>)}
     </ul>
+
+    <h2>Education</h2>
+    {education.map((entry) =><div class="justify-between flex"><p>{entry[0]}</p><p>{entry[1]}</p></div>)}
 </BaseLayout>
