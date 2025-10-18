@@ -3,12 +3,11 @@ import BlogPost from '../components/BlogPost.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/global.css'
 const allPosts = Object.values(import.meta.glob('./posts/*.md', {eager: true}));
-const pageTitle = "My Blog";
+const pageTitle = "Blogposts";
 ---
 
 <BaseLayout pageTitle = {pageTitle}>
 	<h1>{pageTitle}</h1>
-	<p>This is where I will post about my journey learning Astro.</p>
 	<p>To look for blogs by tag click here: <a href="/tags/" class="skill">tag index</a></p>
 	<ul>
 		{allPosts.map((post: any) => <BlogPost post={post} />)}
