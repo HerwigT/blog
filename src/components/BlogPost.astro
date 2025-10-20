@@ -1,8 +1,8 @@
 ---
 const {post} = Astro.props;
 ---
-<a href={post.url} class="text-center block border-2 border-solid border-blue-950 dark:border-amber-200 my-4">
-<h2 class="mt-4 px-8">{post.frontmatter.title}</h2>
-<hr class="my-4">
-<h5 class="mb-4 px-8">{post.frontmatter.description}</h5>
+<a href={post.url} class="text-center block border-2 border-solid border-blue-950 dark:border-amber-200 my-4 rounded-lg shadow-md hover:shadow-lg hover:border-blue-700 dark:hover:border-amber-400 transition-all duration-300">
+    <h2 class="mt-4 px-8 text-xl font-bold">{post.frontmatter.title}</h2>
+    <hr class="my-4">
+    <h5 class="mb-4 px-8 text-base text-gray-600 dark:text-gray-400">{post.frontmatter.description}</h5>
 </a>

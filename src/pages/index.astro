@@ -1,5 +1,7 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro"
+import BlogPost from "../components/BlogPost.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 const pageTitle = "Home Page"
 const identity = {
     firstName : "Herwig",
@@ -7,37 +9,45 @@ const identity = {
     occupation: "Machine Learning Engineer",
     hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
 };
-const techs = ["Python - data engineering and machine learning", "SQL - Postgres", "C# - WPF - Entity Framework", 'Azure - Azure Functions - Azure Machine Learning']
+
+const posts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const recentPosts = posts.sort((a: any, b: any) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()).slice(0, 3);
 ---
 
 <BaseLayout pageTitle = {pageTitle}>
-	<h1>Hi, I'm {identity.firstName}!👋</h1>
-	<h2>
-		Data Engineer - Bouldering Enthusiast - Hobby Blogger
-	</h2>
-	<p>
-		With about four years of hands-on experience in the tech world, 
-		I've grown from building solutions as a C# developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. 
-		Alongside my technical focus, I have the rewarding role of interviewing and mentoring interns, 
-		helping guide their growth throughout their journey in our team.
-	</p>
-	<p>
-		Outside of work, you’ll often find me exploring new topics in programming and AI 
-		or venturing outdoors for hiking and bouldering sessions. 
-		I’m always keen to learn, challenge myself, and find new adventures - both professionally and personally.
-	</p>
-	<h2>Tech Stack</h2>
-	<ul>
-		{techs.map((tech) => <li class="skill">{tech}</li>)}
-	</ul>
+	<div class="max-w-3xl mx-auto">
+		<div class="text-center">
+			<h1 class="text-4xl font-bold mb-2">Hi, I'm {identity.firstName}!👋</h1>
+			<h2 class="text-xl text-gray-600 dark:text-gray-400">
+				Data Engineer - Bouldering Enthusiast - Hobby Blogger
+			</h2>
+		</div>
+		<div class="mt-6 text-left">
+			<p class="mb-4">
+				With about four years of hands-on experience in the tech world, 
+				I've grown from building solutions as a C# developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. 
+				Alongside my technical focus, I have the rewarding role of interviewing and mentoring interns, 
+				helping guide their growth throughout their journey in our team.
+			</p>
+			<p>
+				Outside of work, you’ll often find me exploring new topics in programming and AI 
+				or venturing outdoors for hiking and bouldering sessions. 
+				I’m always keen to learn, challenge myself, and find new adventures - both professionally and personally.
+			</p>
+		</div>
 
-	<h2>Featured Projects</h2>
-	<ul>
-		<li class="skill"><a href="https://github.com/HerwigT/blog" class="skill">Portfolio & Blogging</a></li>
-	</ul>
+		<div class="mt-8">
+			<h2 class="text-2xl font-bold text-center mb-4">Featured Projects</h2>
+			<ProjectCard url="https://github.com/HerwigT/blog" title="Portfolio & Blogging" description = "This website and blog, built with Astro and Tailwind CSS to showcase my work and share my thoughts."/>
+		</div>
 
-	<h2>Recent Blog Posts</h2>
-	<ul>
-    <li class="skill"><a href="/posts/post-1">Learning Astro and Tailwind by Building My Own Website</a></li>
-	</ul>
+		<div class="mt-8">
+			<h2 class="text-2xl font-bold text-center mb-4">Recent Blog Posts</h2>
+			<div>
+				{recentPosts.map((post: any) => (
+					<BlogPost post={post} />
+				))}
+			</div>
+		</div>
+	</div>
 </BaseLayout>

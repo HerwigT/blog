@@ -10,7 +10,7 @@ const identity = {
     occupation: "Data Engineer | Computer Vision Engineer",
     hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
 };
-const skills = ["Python", "Machine Learning", "Data Engineering"];
+const techs = ["Python - data engineering and machine learning", "SQL - Postgres", "C# - WPF - Entity Framework", 'Azure - Azure Functions - Azure Machine Learning'];
 const education = [
     ["Medical University Vienna - Medical Computer Science - Master", "2021-2024", "Masterthesis: Domain-Disentangled Anomaly Detection in Thorax Computed Tomography Images using Deep Learning.", "https://repositorium.meduniwien.ac.at/obvumwhs/content/titleinfo/10431263"], 
     ["TU Vienna - Medical Computer Science - Bachelor", "2017-2020", "Bachelorthesis: Appointment Management in the Outpatient Sector: Analysis, Design, and Prototype Implementation."]
@@ -33,7 +33,7 @@ const companies = [
     <hr class="my-4">
     <h2 class="text-center">{identity.occupation}</h2>
     <hr class="my-4">
-    <h1>Work experience</h1>
+    <h1 class="text-center">Work experience</h1>
     {companies.map((entry) =>
         <div class="justify-between flex">
             <p>{entry[0]}</p>
@@ -45,7 +45,7 @@ const companies = [
     )}
     
     <hr class="my-4">
-    <h1>Education</h1>
+    <h1 class="text-center">Education</h1>
     {education.map((entry) =>
         <div class="justify-between flex">
             <p>{entry[0]}</p>
@@ -56,8 +56,8 @@ const companies = [
         </div>
     )}
     <hr class="my-4">
-    <h1>Skills</h1>
-    <ul>
-        {skills.map((skill) => <li class="skill">{skill}</li>)}
+    <h1 class="text-center">Tech Stack</h1>
+    <ul class="flex flex-wrap gap-2">
+        {techs.map((tech) => <li class="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200">{tech}</li>)}
     </ul>
 </BaseLayout>
