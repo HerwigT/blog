@@ -36,7 +36,7 @@ const companies = [
     <h1 class="text-center">Work experience</h1>
     {companies.map((entry) =>
         <div class="justify-between flex">
-            <p>{entry[0]}</p>
+            <p class="max-w-3/4 md:max-w-none">{entry[0]}</p>
             <p>{entry[1]}</p>
         </div>
         <ul>
@@ -48,7 +48,7 @@ const companies = [
     <h1 class="text-center">Education</h1>
     {education.map((entry) =>
         <div class="justify-between flex">
-            <p>{entry[0]}</p>
+            <p class="max-w-2/3 md:max-w-none">{entry[0]}</p>
             <p>{entry[1]}</p>
         </div>
         <div class="text-sm">
