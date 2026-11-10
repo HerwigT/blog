@@ -35,6 +35,29 @@ export function getTils(modules: Record<string, unknown>): TilModule[] {
 	return (Object.values(modules) as TilModule[]).sort(byDate);
 }
 
+export type TaggedEntry =
+	| { kind: 'post'; url: string; frontmatter: MarkdownPost['frontmatter'] }
+	| { kind: 'til'; url: string; frontmatter: TilModule['frontmatter'] };
+
+export function taggedEntries(posts: MarkdownPost[], tils: TilModule[]): TaggedEntry[] {
+	return [
+		...posts.map((post) => ({ kind: 'post' as const, url: post.url, frontmatter: post.frontmatter })),
+		...tils.map((til) => ({ kind: 'til' as const, url: til.url, frontmatter: til.frontmatter })),
+	].sort(byDate);
+}
+
+export function tagsWithCounts(items: { frontmatter: { tags?: string[] } }[]) {
+	const counts = new Map<string, number>();
+	for (const item of items) {
+		for (const tag of item.frontmatter.tags ?? []) {
+			counts.set(tag, (counts.get(tag) ?? 0) + 1);
+		}
+	}
+	return [...counts.entries()]
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(([tag, count]) => ({ tag, count }));
+}
+
 function byDate(a: { frontmatter: { pubDate: string | Date } }, b: { frontmatter: { pubDate: string | Date } }) {
 	return new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf();
 }

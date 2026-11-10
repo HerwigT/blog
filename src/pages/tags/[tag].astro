@@ -1,32 +1,48 @@
 ---
 import Story from '../../components/Story.astro';
-import { getPosts } from '../../data/site';
+import { formatDate, getPosts, getTils, isoDate, taggedEntries, tagsWithCounts } from '../../data/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-	const allPosts = getPosts(import.meta.glob('../posts/*.md', { eager: true }));
-	const uniqueTags = [...new Set(allPosts.flatMap((post) => post.frontmatter.tags ?? []))];
-	return uniqueTags.map((tag) => {
-		const filteredPosts = allPosts.filter((post) => post.frontmatter.tags?.includes(tag));
-		return {
-			params: { tag },
-			props: { posts: filteredPosts },
-		};
-	});
+	const posts = getPosts(import.meta.glob('../posts/*.md', { eager: true }));
+	const tils = getTils(import.meta.glob('../til/*.md', { eager: true }));
+	const entries = taggedEntries(posts, tils);
+	return tagsWithCounts(entries).map(({ tag }) => ({
+		params: { tag },
+		props: {
+			entries: entries.filter((entry) => entry.frontmatter.tags?.includes(tag)),
+		},
+	}));
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+const { entries } = Astro.props;
 ---
 
-<BaseLayout pageTitle={`Posts tagged ${tag}`} description={`Posts tagged ${tag}.`}>
+<BaseLayout pageTitle={`Tagged ${tag}`} description={`Posts and TILs tagged ${tag}.`}>
 	<header class="mx-auto mb-10 max-w-3xl border-b border-current pb-6">
 		<p class="kicker">Section</p>
 		<h1 class="headline mt-2 text-5xl">{tag}</h1>
-		<p class="deck mt-3">Posts tagged with {tag}.</p>
+		<p class="deck mt-3">Posts and TILs tagged with {tag}.</p>
 	</header>
 	<div class="mx-auto flex max-w-3xl flex-col gap-10">
-		{posts.map((post) => <Story post={post} />)}
+		{
+			entries.map((entry) =>
+				entry.kind === 'post' ? (
+					<Story post={entry} />
+				) : (
+					<article class="min-w-0">
+						<p class="kicker">TIL</p>
+						<h2 class="headline mt-2 text-2xl">
+							<a href={entry.url}>{entry.frontmatter.title}</a>
+						</h2>
+						<p class="dateline mt-3">
+							<time datetime={isoDate(entry.frontmatter.pubDate)}>{formatDate(entry.frontmatter.pubDate)}</time>
+						</p>
+					</article>
+				),
+			)
+		}
 	</div>
 	<p class="mt-12">
 		<a class="underline underline-offset-4" href="/tags/">All tags</a>
