@@ -63,14 +63,17 @@
 }
 
 @layer components {
-	.masthead {
+	.wordmark {
 		display: block;
-		color: inherit;
-		font-size: clamp(2.5rem, 12vw, 5.75rem);
-		font-weight: 620;
-		letter-spacing: -0.03em;
-		line-height: 0.88;
-		text-decoration: none;
+		width: 100%;
+		height: auto;
+	}
+
+	.mark {
+		display: block;
+		width: 1.75rem;
+		height: 1.75rem;
+		flex: none;
 	}
 
 	.motto {
