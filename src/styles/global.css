@@ -1,12 +1,40 @@
 @import "tailwindcss";
 
-@layer base{
-  h1 { @apply m-0 text-4xl py-4}
-  h2 { @apply m-0 text-2xl py-3}
-  h3 { @apply m-0 text-xl py-2}
-  p { @apply py-1.5}
-}
+@layer base {
+	html {
+		color-scheme: light dark;
+	}
 
-@layer components{
-  .skill { @apply uppercase text-amber-200 py-0.5}
+	h1 {
+		@apply m-0 py-4 text-4xl font-bold;
+	}
+
+	h2 {
+		@apply m-0 py-3 text-2xl font-bold;
+	}
+
+	h3 {
+		@apply m-0 py-2 text-xl font-semibold;
+	}
+
+	p {
+		@apply py-1.5 leading-relaxed;
+	}
+
+	:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 3px;
+	}
+
+	.entry a {
+		@apply text-blue-800 underline underline-offset-2 dark:text-amber-300;
+	}
+
+	.entry :where(h1) {
+		@apply py-3 text-2xl;
+	}
+
+	:not(pre) > code {
+		@apply rounded-sm bg-gray-200 px-1 py-0.5 font-mono text-[0.92em] dark:bg-gray-800;
+	}
 }

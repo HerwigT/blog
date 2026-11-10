@@ -1,52 +1,52 @@
 ---
-import BlogPost from "../components/BlogPost.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
-const pageTitle = "Home Page"
-const identity = {
-    firstName : "Herwig",
-    country: "Austria",
-    occupation: "Machine Learning Engineer",
-    hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
-};
+import BlogPost from '../components/BlogPost.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getPosts } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-const posts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
-const recentPosts = posts.sort((a: any, b: any) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()).slice(0, 3);
+const pageTitle = 'Herwig Teufer';
+const recentPosts = getPosts(import.meta.glob('./posts/*.md', { eager: true })).slice(0, 3);
 ---
 
-<BaseLayout pageTitle = {pageTitle}>
-	<div class="max-w-3xl mx-auto">
+<BaseLayout pageTitle={pageTitle}>
+	<div class="mx-auto max-w-3xl">
 		<div class="text-center">
-			<h1 class="text-4xl font-bold mb-2">Hi, I'm {identity.firstName}!👋</h1>
-			<h2 class="text-xl text-gray-600 dark:text-gray-400">
-				Data Engineer - Bouldering Enthusiast - Hobby Blogger
-			</h2>
+			<h1 class="mb-2 text-4xl font-bold">Hi, I'm Herwig!👋</h1>
+			<p class="text-xl text-gray-600 dark:text-gray-400">Data Engineer - Bouldering Enthusiast - Hobby Blogger</p>
 		</div>
 		<div class="mt-6 text-left">
 			<p class="mb-4">
-				With about four years of hands-on experience in the tech world, 
-				I've grown from building solutions as a C# developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. 
-				Alongside my technical focus, I have the rewarding role of interviewing and mentoring interns, 
-				helping guide their growth throughout their journey in our team.
+				With about four years of hands-on experience in the tech world, I've grown from building solutions as a C#
+				developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. Alongside my
+				technical focus, I have the rewarding role of interviewing and mentoring interns, helping guide their growth
+				throughout their journey in our team.
 			</p>
 			<p>
-				Outside of work, you’ll often find me exploring new topics in programming and AI 
-				or venturing outdoors for hiking and bouldering sessions. 
+				Outside of work, you’ll often find me exploring new topics in programming and AI or venturing outdoors for hiking
+				and bouldering sessions.
 			</p>
 		</div>
 
 		<div class="mt-8">
-			<h2 class="text-2xl font-bold text-center mb-4">Featured Projects</h2>
-			<ProjectCard url="https://github.com/HerwigT/blog" title="Portfolio & Blogging" description = "This website and blog, built with Astro and Tailwind CSS to showcase my work and share my thoughts."/>
+			<h2 class="mb-4 text-center text-2xl font-bold">Featured Projects</h2>
+			<ProjectCard
+				url="https://github.com/HerwigT/blog"
+				title="Portfolio & Blogging"
+				description="This website and blog, built with Astro and Tailwind CSS to showcase my work and share my thoughts."
+			/>
 		</div>
 
 		<div class="mt-8">
-			<h2 class="text-2xl font-bold text-center mb-4">Recent Blog Posts</h2>
-			<div>
-				{recentPosts.map((post: any) => (
-					<BlogPost post={post} />
-				))}
-			</div>
+			<h2 class="mb-4 text-center text-2xl font-bold">Recent Blog Posts</h2>
+			<ul class="list-none p-0">
+				{
+					recentPosts.map((post) => (
+						<li>
+							<BlogPost post={post} />
+						</li>
+					))
+				}
+			</ul>
 		</div>
 	</div>
 </BaseLayout>
