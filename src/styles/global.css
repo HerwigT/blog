@@ -204,6 +204,39 @@
 		line-height: 0.8;
 	}
 
+	.til-stream .til-body > p:first-child::first-letter {
+		float: none;
+		padding: 0;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+	}
+
+	.til-body a {
+		text-decoration: underline;
+		text-underline-offset: 0.16em;
+	}
+
+	.prose pre,
+	.til-body pre {
+		margin-top: 0.95rem;
+		overflow-x: auto;
+		border: 1px solid currentColor;
+		padding: 0.8rem 1rem;
+		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+
+	.prose pre code,
+	.prose pre span,
+	.til-body pre code,
+	.til-body pre span {
+		background: transparent;
+		padding: 0;
+		color: inherit;
+		font-size: inherit;
+	}
+
 	.prose :not(pre) > code {
 		padding: 0.05em 0.28em;
 		background: color-mix(in srgb, currentColor 8%, transparent);

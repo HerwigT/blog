@@ -16,9 +16,43 @@ export type MarkdownPost = {
 };
 
 export function getPosts(modules: Record<string, unknown>): MarkdownPost[] {
-	return (Object.values(modules) as MarkdownPost[]).sort(
-		(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf(),
-	);
+	return (Object.values(modules) as MarkdownPost[]).sort(byDate);
+}
+
+export type TilModule = {
+	url: string;
+	Content: unknown;
+	rawContent: () => string;
+	compiledContent: () => Promise<string>;
+	frontmatter: {
+		title: string;
+		pubDate: string | Date;
+		tags?: string[];
+	};
+};
+
+export function getTils(modules: Record<string, unknown>): TilModule[] {
+	return (Object.values(modules) as TilModule[]).sort(byDate);
+}
+
+function byDate(a: { frontmatter: { pubDate: string | Date } }, b: { frontmatter: { pubDate: string | Date } }) {
+	return new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf();
+}
+
+export function excerpt(markdown: string, max = 140): string {
+	const text = markdown
+		.replace(/```[\s\S]*?```/g, ' ')
+		.replace(/`([^`]+)`/g, '$1')
+		.replace(/!\[[^\]]*]\([^)]*\)/g, '')
+		.replace(/\[([^\]]+)]\([^)]*\)/g, '$1')
+		.replace(/^#{1,6}\s+/gm, '')
+		.replace(/[*~>]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim();
+	if (text.length <= max) return text;
+	const cut = text.slice(0, max);
+	const lastSpace = cut.lastIndexOf(' ');
+	return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
 }
 
 export function isoDate(input: string | Date): string {
