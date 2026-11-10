@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom">
 	<xsl:output method="html" encoding="UTF-8"/>
 	<xsl:template match="/">
 		<html lang="en">
@@ -27,7 +27,16 @@
 				<p class="kicker">RSS</p>
 				<h1><xsl:value-of select="rss/channel/title"/></h1>
 				<p class="note">This is an RSS feed. Copy the URL into your reader.</p>
-				<p class="url"><xsl:value-of select="concat(rss/channel/link, 'rss.xml')"/></p>
+				<p class="url">
+					<xsl:choose>
+						<xsl:when test="rss/channel/atom:link[@rel='self']/@href">
+							<xsl:value-of select="rss/channel/atom:link[@rel='self']/@href"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="concat(rss/channel/link, 'rss.xml')"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</p>
 				<xsl:for-each select="rss/channel/item">
 					<article>
 						<h2><a href="{link}"><xsl:value-of select="title"/></a></h2>

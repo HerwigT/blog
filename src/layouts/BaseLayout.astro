@@ -14,6 +14,7 @@ const {
 	author,
 	ogImage = '/og.png',
 	ogImageAlt = 'Herwig Teufer, data engineer in Vienna',
+	extraFeed,
 } = Astro.props;
 
 const title = pageTitle && pageTitle !== siteName ? `${pageTitle} · ${siteName}` : siteName;
@@ -36,6 +37,16 @@ const year = new Date().getFullYear();
 		{author && <meta name="author" content={author} />}
 		<link rel="canonical" href={canonical} />
 		<link rel="alternate" type="application/rss+xml" title={siteName} href={new URL('/rss.xml', Astro.site)} />
+		{
+			extraFeed && (
+				<link
+					rel="alternate"
+					type="application/rss+xml"
+					title={extraFeed.title}
+					href={new URL(extraFeed.href, Astro.site)}
+				/>
+			)
+		}
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />

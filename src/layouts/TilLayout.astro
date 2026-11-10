@@ -1,0 +1,59 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { excerpt, formatDate, isoDate } from '../data/site';
+
+const { frontmatter, rawContent } = Astro.props;
+const body = typeof rawContent === 'function' ? rawContent() : '';
+const description = excerpt(body, 160) || frontmatter.title;
+const published = isoDate(frontmatter.pubDate);
+const tags = frontmatter.tags ?? [];
+const stream = Astro.url.pathname.replace(/\/$/, '') === '/til';
+---
+
+{
+	stream ? (
+		<div class="til-body">
+			<slot />
+		</div>
+	) : (
+		<BaseLayout
+			pageTitle={frontmatter.title}
+			description={description}
+			ogType="article"
+			publishedTime={published}
+			ogImageAlt={frontmatter.title}
+			extraFeed={{ title: 'Herwig Teufer · Small Print', href: '/til/rss.xml' }}
+		>
+			<article class="mx-auto max-w-[38rem]">
+				<p class="kicker">Today I Learned</p>
+				<h1 class="headline mt-3 text-[2.15rem] sm:text-5xl">{frontmatter.title}</h1>
+				<p class="dateline mt-4">
+					<time datetime={published}>{formatDate(frontmatter.pubDate)}</time>
+				</p>
+				<div class="mt-4 border-t border-current"></div>
+				<div class="prose til-body mt-6">
+					<slot />
+				</div>
+				{
+					tags.length > 0 && (
+						<ul class="mt-8 flex list-none flex-wrap gap-x-4 gap-y-2 border-t border-current p-0 pt-4">
+							{tags.map((tag: string) => (
+								<li>
+									<span class="kicker">{tag}</span>
+								</li>
+							))}
+						</ul>
+					)
+				}
+				<p class="mt-8 flex flex-wrap gap-x-4 gap-y-2">
+					<a class="underline underline-offset-4" href="/til/">
+						All TILs
+					</a>
+					<a class="underline underline-offset-4" href="/til/rss.xml">
+						TIL feed
+					</a>
+				</p>
+			</article>
+		</BaseLayout>
+	)
+}

@@ -1,0 +1,43 @@
+---
+import { formatDate, getTils, isoDate } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const tils = getTils(import.meta.glob('./*.md', { eager: true }));
+---
+
+<BaseLayout
+	pageTitle="Small Print"
+	description="Short notes on things I picked up along the way."
+	extraFeed={{ title: 'Herwig Teufer · Small Print', href: '/til/rss.xml' }}
+>
+	<header class="mx-auto mb-10 max-w-3xl border-b border-current pb-6 text-center">
+		<p class="kicker">Today I Learned</p>
+		<h1 class="headline mt-2 text-5xl sm:text-6xl">Small Print</h1>
+		<p class="deck mt-3">Short notes on things I picked up along the way.</p>
+		<p class="mt-4 text-base">
+			<a class="underline underline-offset-4" href="/til/rss.xml">TIL feed</a>
+		</p>
+	</header>
+	<div class="til-stream mx-auto max-w-3xl">
+		{
+			tils.map((til) => {
+				const { Content } = til;
+				const published = isoDate(til.frontmatter.pubDate);
+				return (
+					<article class="border-t border-current py-8 first:border-t-0 first:pt-0">
+						<p class="dateline">
+							<time datetime={published}>{formatDate(til.frontmatter.pubDate)}</time>
+						</p>
+						<h2 class="headline mt-2 text-3xl">
+							<a href={til.url}>{til.frontmatter.title}</a>
+						</h2>
+						<div class="mt-4">
+							<Content />
+						</div>
+					</article>
+				);
+			})
+		}
+	</div>
+	{tils.length === 0 && <p>No notes yet.</p>}
+</BaseLayout>
