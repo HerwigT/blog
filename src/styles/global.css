@@ -94,6 +94,21 @@
 		text-transform: uppercase;
 	}
 
+	.edition {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: center;
+		gap: 0.25rem 1.25rem;
+		padding: 0.5rem 0;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		line-height: 1.4;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
 	.rule-double {
 		box-sizing: content-box;
 		height: 4px;
@@ -260,6 +275,29 @@
 		padding-left: 1rem;
 		border-left: 2px solid currentColor;
 		font-style: italic;
+	}
+}
+
+@media (min-width: 40rem) {
+	.edition {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: baseline;
+	}
+
+	.edition > :first-child {
+		justify-self: start;
+		text-align: left;
+	}
+
+	.edition > :nth-child(2) {
+		justify-self: center;
+		text-align: center;
+	}
+
+	.edition > :last-child {
+		justify-self: end;
+		text-align: right;
 	}
 }
 
