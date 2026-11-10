@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import Mark from '../components/Mark.astro';
 import { siteDescription, siteName } from '../data/site';
 import '../styles/global.css';
 
@@ -64,7 +65,10 @@ const year = new Date().getFullYear();
 			<div class="mx-auto max-w-6xl px-4 pb-8">
 				<div class="rule-double mb-4" aria-hidden="true"></div>
 				<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 text-sm">
-					<p>© {year} {siteName} · Vienna</p>
+					<p class="flex items-center gap-2">
+						<Mark />
+						<span>© {year} {siteName} · Vienna</span>
+					</p>
 					<nav class="flex flex-wrap gap-x-4 gap-y-1" aria-label="Elsewhere">
 						<a class="underline underline-offset-4" href="https://github.com/HerwigT" rel="noopener noreferrer">GitHub</a>
 						<a class="underline underline-offset-4" href="https://www.linkedin.com/in/herwig-teufer" rel="noopener noreferrer">LinkedIn</a>
