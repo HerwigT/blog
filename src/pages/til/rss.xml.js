@@ -17,8 +17,8 @@ export async function GET(context) {
 	);
 
 	return rss({
-		title: `${siteName} — TIL`,
-		description: "Small things I've learned along the way.",
+		title: `${siteName} · Small Print`,
+		description: 'Short notes on things I picked up along the way.',
 		site: context.site,
 		stylesheet: '/rss/styles.xsl',
 		xmlns: { atom: 'http://www.w3.org/2005/Atom' },
