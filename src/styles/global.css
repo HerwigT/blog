@@ -1,24 +1,47 @@
 @import "tailwindcss";
 
+@font-face {
+	font-family: "Newsreader Variable";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 200 800;
+	src: url("../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2") format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "Newsreader Variable";
+	font-style: italic;
+	font-display: swap;
+	font-weight: 200 800;
+	src: url("../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2") format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+	--font-serif: "Newsreader Variable", "Liberation Serif", "Nimbus Roman", Georgia, serif;
+	--font-mono: ui-monospace, "Cascadia Mono", "Liberation Mono", monospace;
+	--color-paper: #f3efe4;
+	--color-ink: #1b1714;
+	--color-muted: #5a534a;
+	--color-kicker: #7c1e1e;
+	--color-paper-dark: #161310;
+	--color-ink-dark: #efe8dc;
+	--color-muted-dark: #c2b8a8;
+	--color-kicker-dark: #e7b1a4;
+}
+
 @layer base {
 	html {
 		color-scheme: light dark;
 	}
 
-	h1 {
-		@apply m-0 py-4 text-4xl font-bold;
-	}
-
-	h2 {
-		@apply m-0 py-3 text-2xl font-bold;
-	}
-
-	h3 {
-		@apply m-0 py-2 text-xl font-semibold;
-	}
-
-	p {
-		@apply py-1.5 leading-relaxed;
+	body {
+		font-family: var(--font-serif);
+		font-weight: 450;
+		font-size: 1.125rem;
+		line-height: 1.65;
+		text-rendering: optimizeLegibility;
 	}
 
 	:focus-visible {
@@ -26,15 +49,254 @@
 		outline-offset: 3px;
 	}
 
-	.entry a {
-		@apply text-blue-800 underline underline-offset-2 dark:text-amber-300;
+	::selection {
+		background: var(--color-ink);
+		color: var(--color-paper);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	::selection {
+		background: var(--color-ink-dark);
+		color: var(--color-paper-dark);
+	}
+}
+
+@layer components {
+	.masthead {
+		display: block;
+		color: inherit;
+		font-size: clamp(2.5rem, 12vw, 5.75rem);
+		font-weight: 620;
+		letter-spacing: -0.03em;
+		line-height: 0.88;
+		text-decoration: none;
 	}
 
-	.entry :where(h1) {
-		@apply py-3 text-2xl;
+	.motto {
+		font-size: 1.05rem;
+		font-style: italic;
+		font-weight: 450;
+		line-height: 1.35;
+		text-wrap: balance;
 	}
 
-	:not(pre) > code {
-		@apply rounded-sm bg-gray-200 px-1 py-0.5 font-mono text-[0.92em] dark:bg-gray-800;
+	.kicker {
+		margin: 0;
+		color: var(--color-kicker);
+		font-size: 0.75rem;
+		font-weight: 650;
+		letter-spacing: 0.16em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.deck {
+		color: var(--color-muted);
+		font-size: 1.2rem;
+		font-style: italic;
+		font-weight: 450;
+		line-height: 1.45;
+		text-wrap: balance;
+	}
+
+	.dateline {
+		color: var(--color-muted);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+
+	.rule-double {
+		box-sizing: content-box;
+		height: 4px;
+		border-top: 3px solid currentColor;
+		border-bottom: 1px solid currentColor;
+	}
+
+	.nav-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.75rem;
+		padding: 0.55rem 0.8rem;
+		color: inherit;
+		font-size: 0.78rem;
+		font-weight: 650;
+		letter-spacing: 0.16em;
+		line-height: 1;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	.nav-link[aria-current="page"] {
+		box-shadow: inset 0 -2px 0 currentColor;
+	}
+
+	.headline {
+		font-weight: 620;
+		letter-spacing: -0.02em;
+		line-height: 1.08;
+		overflow-wrap: break-word;
+	}
+
+	.headline a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.headline a:hover,
+	.headline a:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 0.08em;
+	}
+
+	.front {
+		display: grid;
+		gap: 2rem;
+	}
+
+	.story-grid {
+		display: grid;
+		gap: 1.75rem;
+	}
+
+	.prose {
+		max-width: 38rem;
+		margin-inline: auto;
+		font-size: 1.1875rem;
+		line-height: 1.7;
+	}
+
+	.prose > * + * {
+		margin-top: 0.95rem;
+	}
+
+	.prose h2,
+	.prose h3 {
+		font-weight: 620;
+		letter-spacing: -0.02em;
+		line-height: 1.2;
+	}
+
+	.prose h2 {
+		margin-top: 2rem;
+		font-size: 1.7rem;
+	}
+
+	.prose h3 {
+		margin-top: 1.5rem;
+		font-size: 1.3rem;
+	}
+
+	.prose a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.16em;
+	}
+
+	.prose > p:first-child::first-letter {
+		float: left;
+		padding: 0.12rem 0.45rem 0 0;
+		font-size: 3.35rem;
+		font-weight: 620;
+		line-height: 0.8;
+	}
+
+	.prose :not(pre) > code {
+		padding: 0.05em 0.28em;
+		background: color-mix(in srgb, currentColor 8%, transparent);
+		font-family: var(--font-mono);
+		font-size: 0.84em;
+	}
+
+	.prose img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.prose ul,
+	.prose ol {
+		margin-top: 0.8rem;
+		padding-left: 1.25rem;
+	}
+
+	.prose blockquote {
+		margin-top: 1rem;
+		padding-left: 1rem;
+		border-left: 2px solid currentColor;
+		font-style: italic;
+	}
+}
+
+@media (min-width: 48rem) {
+	.front {
+		grid-template-columns: minmax(0, 1.75fr) minmax(15rem, 1fr);
+		gap: 0;
+	}
+
+	.front-lead {
+		padding-right: 1.75rem;
+		border-right: 1px solid currentColor;
+	}
+
+	.front-rail {
+		padding-left: 1.75rem;
+	}
+
+	.story-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0;
+	}
+
+	.story-grid > * {
+		padding-right: 1.25rem;
+		padding-left: 1.25rem;
+		border-left: 1px solid currentColor;
+	}
+
+	.story-grid > *:first-child {
+		padding-left: 0;
+		border-left: 0;
+	}
+}
+
+@media (max-width: 40rem) {
+	.prose > p:first-child::first-letter {
+		font-size: 2.8rem;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.kicker {
+		color: var(--color-kicker-dark);
+	}
+
+	.deck,
+	.dateline {
+		color: var(--color-muted-dark);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		transition: none !important;
+	}
+}
+
+@media print {
+	header nav,
+	footer,
+	.skip-link {
+		display: none !important;
+	}
+
+	body {
+		background: white !important;
+		color: black !important;
 	}
 }

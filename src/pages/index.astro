@@ -1,52 +1,61 @@
 ---
-import BlogPost from '../components/BlogPost.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Story from '../components/Story.astro';
 import { getPosts } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pageTitle = 'Herwig Teufer';
-const recentPosts = getPosts(import.meta.glob('./posts/*.md', { eager: true })).slice(0, 3);
+const posts = getPosts(import.meta.glob('./posts/*.md', { eager: true }));
+const [lead, ...rest] = posts;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-	<div class="mx-auto max-w-3xl">
-		<div class="text-center">
-			<h1 class="mb-2 text-4xl font-bold">Hi, I'm Herwig!👋</h1>
-			<p class="text-xl text-gray-600 dark:text-gray-400">Data Engineer - Bouldering Enthusiast - Hobby Blogger</p>
+	<div class="front">
+		<div class="front-lead">
+			{
+				lead ? (
+					<Story post={lead} heading="h1" featured={true} />
+				) : (
+					<h1 class="headline text-4xl">Hi, I'm Herwig!</h1>
+				)
+			}
 		</div>
-		<div class="mt-6 text-left">
-			<p class="mb-4">
-				With about four years of hands-on experience in the tech world, I've grown from building solutions as a C#
-				developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. Alongside my
-				technical focus, I have the rewarding role of interviewing and mentoring interns, helping guide their growth
-				throughout their journey in our team.
-			</p>
-			<p>
-				Outside of work, you’ll often find me exploring new topics in programming and AI or venturing outdoors for hiking
-				and bouldering sessions.
-			</p>
-		</div>
-
-		<div class="mt-8">
-			<h2 class="mb-4 text-center text-2xl font-bold">Featured Projects</h2>
-			<ProjectCard
-				url="https://github.com/HerwigT/blog"
-				title="Portfolio & Blogging"
-				description="This website and blog, built with Astro and Tailwind CSS to showcase my work and share my thoughts."
-			/>
-		</div>
-
-		<div class="mt-8">
-			<h2 class="mb-4 text-center text-2xl font-bold">Recent Blog Posts</h2>
-			<ul class="list-none p-0">
-				{
-					recentPosts.map((post) => (
-						<li>
-							<BlogPost post={post} />
-						</li>
-					))
-				}
-			</ul>
-		</div>
+		<aside class="front-rail">
+			<p class="kicker">The writer</p>
+			<h2 class="headline mt-2 text-3xl">Hi, I'm Herwig!👋</h2>
+			<div class="mt-4 space-y-4 text-[1.05rem] leading-relaxed">
+				<p>
+					With about four years of hands-on experience in the tech world, I've grown from building solutions as a C#
+					developer with Microsoft Dynamics to specializing in data engineering for Computer Vision projects. Alongside my
+					technical focus, I have the rewarding role of interviewing and mentoring interns, helping guide their growth
+					throughout their journey in our team.
+				</p>
+				<p>
+					Outside of work, you’ll often find me exploring new topics in programming and AI or venturing outdoors for hiking
+					and bouldering sessions.
+				</p>
+			</div>
+			<div class="mt-8 border-t border-current pt-5">
+				<p class="kicker">Featured</p>
+				<h3 class="headline mt-2 text-2xl">
+					<a class="underline underline-offset-4" href="https://github.com/HerwigT/blog" rel="noopener noreferrer">Portfolio &amp; Blogging</a>
+				</h3>
+				<p class="mt-2 text-base leading-relaxed text-muted dark:text-muted-dark">
+					This website and blog, built with Astro and Tailwind CSS to showcase my work and share my thoughts.
+				</p>
+			</div>
+		</aside>
 	</div>
+
+	{
+		rest.length > 0 && (
+			<section class="mt-12 border-t border-current pt-8">
+				<h2 class="kicker">Also in this edition</h2>
+				<div class="story-grid mt-6">
+					{rest.map((post) => (
+						<Story post={post} />
+					))}
+				</div>
+			</section>
+		)
+	}
 </BaseLayout>

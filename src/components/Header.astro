@@ -1,7 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components';
-import Social from './Social.astro';
-
 const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 
 const isCurrent = (href: string) => {
@@ -10,73 +7,48 @@ const isCurrent = (href: string) => {
 	return path.startsWith(target);
 };
 
-const desktopClass = (href: string) => {
-	const current = isCurrent(href);
-	return `text-lg text-gray-900 dark:text-gray-50 hover:underline ${current ? 'font-semibold underline' : ''}`;
-};
+const editionDate = new Intl.DateTimeFormat('en-GB', {
+	weekday: 'long',
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+	timeZone: 'Europe/Vienna',
+}).format(new Date());
 
-const mobileClass = (href: string) => {
-	const current = isCurrent(href);
-	return `block rounded-md px-3 py-2 text-lg text-gray-900 hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-800 ${current ? 'font-semibold underline' : ''}`;
-};
+const links = [
+	{ href: '/', label: 'Home' },
+	{ href: '/blog/', label: 'Blog' },
+	{ href: '/about/', label: 'About' },
+];
 ---
 
-<header class="border-b-2 border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
-	<div class="mx-auto max-w-3xl px-4">
-		<div class="flex items-center justify-between py-4">
-			<a href="/" class="text-2xl font-bold text-gray-900 dark:text-gray-50">Herwig Teufer</a>
-
-			<nav class="hidden items-center space-x-6 md:flex" aria-label="Primary">
-				<a class={desktopClass('/')} href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Home</a>
-				<a class={desktopClass('/blog/')} href="/blog/" aria-current={isCurrent('/blog/') ? 'page' : undefined}>Blog</a>
-				<a class={desktopClass('/about/')} href="/about/" aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a>
-				<a class="text-lg text-gray-900 hover:underline dark:text-gray-50" href="/rss.xml">RSS</a>
-				<div class="flex items-center space-x-6 pl-4">
-					<Social platform="github" username="HerwigT" icon="github" />
-					<Social platform="linkedin" username="in/herwig-teufer" icon="linkedin" />
-				</div>
-			</nav>
-
-			<div class="md:hidden">
-				<button
-					id="menu-button"
-					type="button"
-					class="p-2 text-gray-900 dark:text-gray-50"
-					aria-expanded="false"
-					aria-controls="mobile-menu"
-					aria-label="Open menu"
-				>
-					<Icon name="bars" class="h-6 w-6" aria-hidden="true" />
-				</button>
-			</div>
-		</div>
+<header class="border-b border-current text-ink dark:text-ink-dark">
+	<div class="mx-auto max-w-6xl px-4 pb-2 pt-5 text-center sm:pt-7">
+		<p class="kicker">Vienna</p>
+		<a href="/" class="masthead mt-2">Herwig Teufer</a>
+		<p class="motto mt-3 text-muted dark:text-muted-dark">Data Engineer · Bouldering Enthusiast · Hobby Blogger</p>
 	</div>
-
-	<nav id="mobile-menu" class="hidden md:hidden" aria-label="Mobile" hidden>
-		<div class="space-y-1 px-4 pb-3 pt-2">
-			<a class={mobileClass('/')} href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Home</a>
-			<a class={mobileClass('/blog/')} href="/blog/" aria-current={isCurrent('/blog/') ? 'page' : undefined}>Blog</a>
-			<a class={mobileClass('/about/')} href="/about/" aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a>
-			<a class="block rounded-md px-3 py-2 text-lg text-gray-900 hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-800" href="/rss.xml">RSS</a>
-			<div class="flex justify-center space-x-4 pt-4">
-				<Social platform="github" username="HerwigT" icon="github" />
-				<Social platform="linkedin" username="in/herwig-teufer" icon="linkedin" />
-			</div>
-		</div>
-	</nav>
+	<div class="mx-auto max-w-6xl px-4">
+		<div class="rule-double" aria-hidden="true"></div>
+		<p class="flex flex-wrap items-baseline justify-center gap-x-5 gap-y-1 py-2 text-center text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-muted sm:justify-between dark:text-muted-dark">
+			<span>{editionDate}</span>
+			<span>Personal edition</span>
+			<span>teufer.dev</span>
+		</p>
+		<div class="border-t border-current"></div>
+		<nav class="flex flex-wrap items-center justify-center" aria-label="Primary">
+			{
+				links.map((link) => (
+					<a
+						class="nav-link"
+						href={link.href}
+						aria-current={isCurrent(link.href) ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				))
+			}
+			<a class="nav-link" href="/rss.xml">RSS</a>
+		</nav>
+	</div>
 </header>
-
-<script>
-	const menuButton = document.getElementById('menu-button');
-	const mobileMenu = document.getElementById('mobile-menu');
-
-	if (menuButton && mobileMenu) {
-		menuButton.addEventListener('click', () => {
-			const expanded = menuButton.getAttribute('aria-expanded') === 'true';
-			menuButton.setAttribute('aria-expanded', String(!expanded));
-			menuButton.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
-			mobileMenu.classList.toggle('hidden', expanded);
-			mobileMenu.toggleAttribute('hidden', expanded);
-		});
-	}
-</script>

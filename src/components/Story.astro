@@ -1,0 +1,47 @@
+---
+import { formatDate, isoDate } from '../data/site';
+
+const { post, heading = 'h2', featured = false } = Astro.props;
+const { title, description, pubDate, tags = [] } = post.frontmatter;
+const published = isoDate(pubDate);
+const kicker = tags[0];
+const titleClass = featured
+	? 'headline mt-2 text-[2.05rem] sm:text-5xl'
+	: 'headline mt-2 text-2xl';
+---
+
+<article class="min-w-0">
+	{
+		kicker && (
+			<p class="kicker">
+				<a class="text-inherit no-underline hover:underline" href={`/tags/${encodeURIComponent(kicker)}/`}>
+					{kicker}
+				</a>
+			</p>
+		)
+	}
+	{
+		heading === 'h1' ? (
+			<h1 class={titleClass}>
+				<a href={post.url}>{title}</a>
+			</h1>
+		) : (
+			<h2 class={titleClass}>
+				<a href={post.url}>{title}</a>
+			</h2>
+		)
+	}
+	<p class="deck mt-3">{description}</p>
+	<p class="dateline mt-3">
+		<time datetime={published}>{formatDate(pubDate)}</time>
+	</p>
+	{
+		featured && (
+			<p class="mt-4">
+				<a class="underline underline-offset-4" href={post.url}>
+					Continue reading
+				</a>
+			</p>
+		)
+	}
+</article>
