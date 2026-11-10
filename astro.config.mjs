@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://herwigt.github.io',
+  site: 'https://teufer.dev',
   integrations: [icon()],
 
   vite: {
