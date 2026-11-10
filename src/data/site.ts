@@ -11,6 +11,7 @@ export type MarkdownPost = {
 		pubDate: string | Date;
 		author?: string;
 		tags?: string[];
+		ogImage?: string;
 	};
 };
 

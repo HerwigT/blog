@@ -5,6 +5,8 @@ import { formatDate, isoDate } from '../data/site';
 const { frontmatter } = Astro.props;
 const published = isoDate(frontmatter.pubDate);
 const tags = frontmatter.tags ?? [];
+const slug = Astro.url.pathname.split('/').filter(Boolean).at(-1);
+const ogImage = frontmatter.ogImage ?? `/og/${slug}.png`;
 ---
 
 <BaseLayout
@@ -13,6 +15,8 @@ const tags = frontmatter.tags ?? [];
 	ogType="article"
 	publishedTime={published}
 	author={frontmatter.author}
+	ogImage={ogImage}
+	ogImageAlt={frontmatter.title}
 >
 	<article class="mx-auto max-w-[38rem]">
 		{
