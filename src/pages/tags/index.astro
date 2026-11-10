@@ -14,13 +14,14 @@ const tags = tagsWithCounts(taggedEntries(posts, tils));
 		<h1 class="headline mt-2 text-5xl">Tags</h1>
 		<p class="deck mt-3">Each tag lists the posts and TILs that use it.</p>
 	</header>
-	<ul class="mx-auto mt-10 flex max-w-3xl list-none flex-wrap justify-center gap-x-6 gap-y-4 p-0">
+	<ul class="tag-index">
 		{
 			tags.map(({ tag, count }) => (
 				<li>
-					<a class="kicker text-base hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
-						{tag}
-						<span class="ml-2">{count}</span>
+					<a href={`/tags/${encodeURIComponent(tag)}/`}>
+						<span class="kicker">{tag}</span>
+						<span class="tag-leader" aria-hidden="true"></span>
+						<span class="tag-count">{count}</span>
 					</a>
 				</li>
 			))
