@@ -18,6 +18,7 @@ export function GET(context) {
 		description:
 			'Personal site and blog of Herwig Teufer, a data engineer in Vienna. Notes on software, data, and working with computers.',
 		site: context.site,
+		stylesheet: '/rss/styles.xsl',
 		items,
 		customData: '<language>en</language>',
 	});
