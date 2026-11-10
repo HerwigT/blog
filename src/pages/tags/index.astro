@@ -1,26 +1,27 @@
 ---
-import { getPosts } from '../../data/site';
+import { getPosts, getTils, taggedEntries, tagsWithCounts } from '../../data/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const pageTitle = 'Tags';
-const allPosts = getPosts(import.meta.glob('../posts/*.md', { eager: true }));
-const uniqueTags = [...new Set(allPosts.flatMap((post) => post.frontmatter.tags ?? []))].sort((a, b) =>
-	a.localeCompare(b),
-);
+const posts = getPosts(import.meta.glob('../posts/*.md', { eager: true }));
+const tils = getTils(import.meta.glob('../til/*.md', { eager: true }));
+const tags = tagsWithCounts(taggedEntries(posts, tils));
 ---
 
-<BaseLayout pageTitle={pageTitle} description="Posts grouped by topic.">
+<BaseLayout pageTitle={pageTitle} description="Posts and TILs grouped by topic.">
 	<header class="mx-auto max-w-3xl text-center">
 		<p class="kicker">Index</p>
 		<h1 class="headline mt-2 text-5xl">Tags</h1>
-		<p class="deck mt-3">Click on a tag to list all blogs with this tag.</p>
+		<p class="deck mt-3">Each tag lists the posts and TILs that use it.</p>
 	</header>
-	<ul class="mx-auto mt-10 flex max-w-3xl list-none flex-wrap justify-center gap-x-6 gap-y-4 p-0">
+	<ul class="tag-index">
 		{
-			uniqueTags.map((tag) => (
+			tags.map(({ tag, count }) => (
 				<li>
-					<a class="kicker text-base hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
-						{tag}
+					<a href={`/tags/${encodeURIComponent(tag)}/`}>
+						<span class="kicker">{tag}</span>
+						<span class="tag-leader" aria-hidden="true"></span>
+						<span class="tag-count">{count}</span>
 					</a>
 				</li>
 			))

@@ -31,6 +31,18 @@ const tils = getTils(import.meta.glob('./*.md', { eager: true }));
 						<h2 class="headline mt-2 text-3xl">
 							<a href={til.url}>{til.frontmatter.title}</a>
 						</h2>
+						{(til.frontmatter.tags ?? []).length > 0 && (
+							<p class="kicker mt-3">
+								{(til.frontmatter.tags ?? []).map((tag: string, index: number) => (
+									<>
+										{index > 0 && <span aria-hidden="true"> · </span>}
+										<a class="hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
+											{tag}
+										</a>
+									</>
+								))}
+							</p>
+						)}
 						<div class="mt-4">
 							<Content />
 						</div>
