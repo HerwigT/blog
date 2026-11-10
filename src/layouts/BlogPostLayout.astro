@@ -1,19 +1,50 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-const { frontmatter } = Astro.props;
----
-<BaseLayout pageTitle={frontmatter.title}>
-    <h1>{frontmatter.title}</h1>
-    <p>Published on <b>{frontmatter.pubDate.toString().slice(0,10)}</b>, written by <b>{frontmatter.author}</b></p>
-    <slot />
-    <div class="flex flex-wrap my-4 gap-2">
-        {frontmatter.tags.map((tag: string) => (
-            <a href={`/tags/${tag}`} class="bg-gray-200 dark:bg-gray-700 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">{tag}</a>
-        ))}
-    </div>
-    <a class='inline-flex items-center text-blue-700 dark:text-amber-600 hover:underline' href="/blog">
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-        Back to blogs
-    </a>
-</BaseLayout>
+import BaseLayout from './BaseLayout.astro';
+import { formatDate, isoDate } from '../data/site';
 
+const { frontmatter } = Astro.props;
+const published = isoDate(frontmatter.pubDate);
+---
+
+<BaseLayout
+	pageTitle={frontmatter.title}
+	description={frontmatter.description}
+	ogType="article"
+	publishedTime={published}
+	author={frontmatter.author}
+>
+	<article>
+		<h1>{frontmatter.title}</h1>
+		<p>
+			Published on <time datetime={published}><b>{formatDate(frontmatter.pubDate)}</b></time>, written by <b
+				>{frontmatter.author}</b
+			>
+		</p>
+		<div class="entry">
+			<slot />
+		</div>
+		{frontmatter.tags?.length > 0 && (
+			<ul class="my-4 flex list-none flex-wrap gap-2 p-0">
+				{frontmatter.tags.map((tag: string) => (
+					<li>
+						<a
+							href={`/tags/${encodeURIComponent(tag)}/`}
+							class="rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 no-underline transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+						>
+							{tag}
+						</a>
+					</li>
+				))}
+			</ul>
+		)}
+		<a class="inline-flex items-center text-blue-800 underline dark:text-amber-300" href="/blog/">
+			<svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+				<path
+					fill-rule="evenodd"
+					d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+					clip-rule="evenodd"></path>
+			</svg>
+			Back to blogs
+		</a>
+	</article>
+</BaseLayout>

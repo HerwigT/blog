@@ -1,16 +1,29 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro"
-const pageTitle = "Tag Index"
+import { getPosts } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const allPosts = Object.values(import.meta.glob('../posts/*.md', {eager: true}));
-const uniqueTags = [...new Set(allPosts.map((post:any) => post.frontmatter.tags).flat())];
+const pageTitle = 'Tags';
+const allPosts = getPosts(import.meta.glob('../posts/*.md', { eager: true }));
+const uniqueTags = [...new Set(allPosts.flatMap((post) => post.frontmatter.tags ?? []))].sort((a, b) =>
+	a.localeCompare(b),
+);
 ---
-<BaseLayout pageTitle={pageTitle}>
-    <h1>Tag Overview</h1>
-    <h3>Click on a tag to list all blogs with this tag:</h3>
-    <div class="flex flex-wrap my-4 gap-2">
-        {uniqueTags.map((tag) => (
-            <a href={`/tags/${tag}`} class="bg-gray-200 dark:bg-gray-700 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">{tag}</a>
-        ))}
-    </div>
+
+<BaseLayout pageTitle={pageTitle} description="Posts grouped by topic.">
+	<h1>Tags</h1>
+	<p>Click on a tag to list all blogs with this tag:</p>
+	<ul class="my-4 flex list-none flex-wrap gap-2 p-0">
+		{
+			uniqueTags.map((tag) => (
+				<li>
+					<a
+						href={`/tags/${encodeURIComponent(tag)}/`}
+						class="rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 no-underline transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+					>
+						{tag}
+					</a>
+				</li>
+			))
+		}
+	</ul>
 </BaseLayout>

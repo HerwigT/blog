@@ -1,63 +1,115 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/global.css'
 
-const pageTitle = "Herwig Teufer";
+const pageTitle = 'About';
 const identity = {
-    firstName : "Herwig",
-    city: "Vienna",
-    country: "Austria",
-    occupation: "Data Engineer | Computer Vision Engineer",
-    hobbies: ["bouldering", "hiking", "cooking", "gaming", "reading"]
+	occupation: 'Data Engineer | Computer Vision Engineer',
 };
-const techs = ["Python - data engineering and machine learning", "SQL - Postgres", "C# - WPF - Entity Framework", 'Azure - Azure Functions - Azure Machine Learning'];
+const techs = [
+	'Python - data engineering and machine learning',
+	'SQL - Postgres',
+	'C# - WPF - Entity Framework',
+	'Azure - Azure Functions - Azure Machine Learning',
+];
 const education = [
-    ["Medical University Vienna - Medical Computer Science - Master", "2021-2024", "Masterthesis: Domain-Disentangled Anomaly Detection in Thorax Computed Tomography Images using Deep Learning.", "https://repositorium.meduniwien.ac.at/obvumwhs/content/titleinfo/10431263"], 
-    ["TU Vienna - Medical Computer Science - Bachelor", "2017-2020", "Bachelorthesis: Appointment Management in the Outpatient Sector: Analysis, Design, and Prototype Implementation."]
-]
+	[
+		'Medical University Vienna - Medical Computer Science - Master',
+		'2021-2024',
+		'Masterthesis: Domain-Disentangled Anomaly Detection in Thorax Computed Tomography Images using Deep Learning.',
+		'https://repositorium.meduniwien.ac.at/obvumwhs/content/titleinfo/10431263',
+	],
+	[
+		'TU Vienna - Medical Computer Science - Bachelor',
+		'2017-2020',
+		'Bachelorthesis: Appointment Management in the Outpatient Sector: Analysis, Design, and Prototype Implementation.',
+	],
+];
 const companies = [
-    ["Becton Dickinson (BD) - Data Engineer", "2023-20XX", 
-    "Built a robust ETL data pipeline handling ingestion, transformation, and storage of large-scale image datasets and metadata, ensuring data quality and consistency across international environments.", 
-    "Led the recruitment, onboarding, and mentorship of data science interns, including candidate interviews, selection, and ongoing technical guidance.",
-    "Owned data strategy and communication within the project - identified data needs and sources, facilitated access for data scientists, and translated complex findings into actionable insights for project leads."
-    ], 
-    ["ace Neue Informationstechnologien GmbH - Software Developer", "2021-2023", 
-    "Developed and customized Microsoft Dynamics 365 solutions using C#, TypeScript, and Entity Framework, implementing custom actions and extensions to enhance business workflows.", 
-    "Built a financial data ingestion tool to transfer and synchronize data from Dynamics 365 into clients’ personal finance management systems, improving data accuracy and automation.", 
-    "Designed and implemented a custom marketing module replacing Dynamics 365’s native functionality, supporting automated email templates and document generation ('Serienbriefe')."],
-    ["Leitner Messtechnische Dienstleistungen - Studentjob", "2018-2021"]
-]
+	[
+		'Becton Dickinson (BD) - Data Engineer',
+		'2023-20XX',
+		'Built a robust ETL data pipeline handling ingestion, transformation, and storage of large-scale image datasets and metadata, ensuring data quality and consistency across international environments.',
+		'Led the recruitment, onboarding, and mentorship of data science interns, including candidate interviews, selection, and ongoing technical guidance.',
+		'Owned data strategy and communication within the project - identified data needs and sources, facilitated access for data scientists, and translated complex findings into actionable insights for project leads.',
+	],
+	[
+		'ace Neue Informationstechnologien GmbH - Software Developer',
+		'2021-2023',
+		'Developed and customized Microsoft Dynamics 365 solutions using C#, TypeScript, and Entity Framework, implementing custom actions and extensions to enhance business workflows.',
+		'Built a financial data ingestion tool to transfer and synchronize data from Dynamics 365 into clients’ personal finance management systems, improving data accuracy and automation.',
+		'Designed and implemented a custom marketing module replacing Dynamics 365’s native functionality, supporting automated email templates and document generation (\'Serienbriefe\').',
+	],
+	['Leitner Messtechnische Dienstleistungen - Studentjob', '2018-2021'],
+];
 ---
-<BaseLayout pageTitle = {pageTitle}>
-    <h1 class="text-center">{pageTitle}</h1>
-    <hr class="my-4">
-    <h2 class="text-center">{identity.occupation}</h2>
-    <hr class="my-4">
-    <h1 class="text-center">Work experience</h1>
-    {companies.map((entry) =>
-        <div class="justify-between flex">
-            <p class="max-w-3/4 md:max-w-none">{entry[0]}</p>
-            <p>{entry[1]}</p>
-        </div>
-        <ul>
-            {entry.slice(2).map((skill) => <li class="text-sm list-disc mx-6">{skill}</li>)}
-        </ul>
-    )}
-    
-    <hr class="my-4">
-    <h1 class="text-center">Education</h1>
-    {education.map((entry) =>
-        <div class="justify-between flex">
-            <p class="max-w-2/3 md:max-w-none">{entry[0]}</p>
-            <p>{entry[1]}</p>
-        </div>
-        <div class="text-sm">
-            {entry[2]}{entry[3] && <a href=`${entry[3]}` target="_blank"> 🔗</a>}
-        </div>
-    )}
-    <hr class="my-4">
-    <h1 class="text-center">Tech Stack</h1>
-    <ul class="flex flex-wrap gap-2">
-        {techs.map((tech) => <li class="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200">{tech}</li>)}
-    </ul>
+
+<BaseLayout
+	pageTitle={pageTitle}
+	description="Work, education, and tools. Herwig Teufer is a data engineer in Vienna."
+>
+	<h1 class="text-center">Herwig Teufer</h1>
+	<hr class="my-4" />
+	<h2 class="text-center">{identity.occupation}</h2>
+	<hr class="my-4" />
+	<h2 class="text-center">Work experience</h2>
+	{
+		companies.map((entry) => {
+			const [role, dates, ...points] = entry;
+			return (
+				<section class="mt-6">
+					<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+						<h3 class="py-0 text-base font-semibold">{role}</h3>
+						<p class="shrink-0 py-0 text-sm text-gray-600 dark:text-gray-400">{dates}</p>
+					</div>
+					{points.length > 0 && (
+						<ul class="mt-2">
+							{points.map((point) => (
+								<li class="mx-6 list-disc text-sm">{point}</li>
+							))}
+						</ul>
+					)}
+				</section>
+			);
+		})
+	}
+
+	<hr class="my-4" />
+	<h2 class="text-center">Education</h2>
+	{
+		education.map((entry) => (
+			<section class="mt-6">
+				<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+					<h3 class="py-0 text-base font-semibold">{entry[0]}</h3>
+					<p class="shrink-0 py-0 text-sm text-gray-600 dark:text-gray-400">{entry[1]}</p>
+				</div>
+				<p class="text-sm">
+					{entry[2]}
+					{entry[3] && (
+						<>
+							{' '}
+							<a
+								href={entry[3]}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-blue-800 underline dark:text-amber-300"
+							>
+								Read thesis<span class="sr-only"> (opens in a new tab)</span>
+							</a>
+						</>
+					)}
+				</p>
+			</section>
+		))
+	}
+	<hr class="my-4" />
+	<h2 class="text-center">Tech Stack</h2>
+	<ul class="flex list-none flex-wrap gap-2 p-0">
+		{
+			techs.map((tech) => (
+				<li class="rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+					{tech}
+				</li>
+			))
+		}
+	</ul>
 </BaseLayout>
