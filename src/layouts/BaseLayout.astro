@@ -10,6 +10,12 @@ const {pageTitle} = Astro.props;
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Herwig Teufer"
+			href={new URL('/rss.xml', Astro.site)}
+		/>
 		<title>{pageTitle}</title>
 	</head>
 	<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 min-h-screen">
