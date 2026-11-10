@@ -47,69 +47,67 @@ const companies = [
 	pageTitle={pageTitle}
 	description="Work, education, and tools. Herwig Teufer is a data engineer in Vienna."
 >
-	<h1 class="text-center">Herwig Teufer</h1>
-	<hr class="my-4" />
-	<h2 class="text-center">{identity.occupation}</h2>
-	<hr class="my-4" />
-	<h2 class="text-center">Work experience</h2>
-	{
-		companies.map((entry) => {
-			const [role, dates, ...points] = entry;
-			return (
-				<section class="mt-6">
-					<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-						<h3 class="py-0 text-base font-semibold">{role}</h3>
-						<p class="shrink-0 py-0 text-sm text-gray-600 dark:text-gray-400">{dates}</p>
-					</div>
-					{points.length > 0 && (
-						<ul class="mt-2">
-							{points.map((point) => (
-								<li class="mx-6 list-disc text-sm">{point}</li>
-							))}
-						</ul>
-					)}
-				</section>
-			);
-		})
-	}
+	<header class="mx-auto max-w-3xl border-b border-current pb-6 text-center">
+		<p class="kicker">Profile</p>
+		<h1 class="headline mt-2 text-5xl">Herwig Teufer</h1>
+		<p class="deck mt-3">{identity.occupation}</p>
+	</header>
 
-	<hr class="my-4" />
-	<h2 class="text-center">Education</h2>
-	{
-		education.map((entry) => (
-			<section class="mt-6">
-				<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-					<h3 class="py-0 text-base font-semibold">{entry[0]}</h3>
-					<p class="shrink-0 py-0 text-sm text-gray-600 dark:text-gray-400">{entry[1]}</p>
-				</div>
-				<p class="text-sm">
-					{entry[2]}
-					{entry[3] && (
-						<>
-							{' '}
-							<a
-								href={entry[3]}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-blue-800 underline dark:text-amber-300"
-							>
-								Read thesis<span class="sr-only"> (opens in a new tab)</span>
-							</a>
-						</>
-					)}
-				</p>
-			</section>
-		))
-	}
-	<hr class="my-4" />
-	<h2 class="text-center">Tech Stack</h2>
-	<ul class="flex list-none flex-wrap gap-2 p-0">
-		{
-			techs.map((tech) => (
-				<li class="rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-200">
-					{tech}
-				</li>
-			))
-		}
-	</ul>
+	<div class="mx-auto max-w-3xl">
+		<section class="mt-10">
+			<h2 class="kicker">Work experience</h2>
+			{
+				companies.map((entry) => {
+					const [role, dates, ...points] = entry;
+					return (
+						<section class="mt-6 border-t border-current pt-4">
+							<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+								<h3 class="headline text-xl">{role}</h3>
+								<p class="dateline shrink-0">{dates}</p>
+							</div>
+							{points.length > 0 && (
+								<ul class="mt-3 list-disc space-y-1 pl-5 text-base leading-relaxed">
+									{points.map((point) => (
+										<li>{point}</li>
+									))}
+								</ul>
+							)}
+						</section>
+					);
+				})
+			}
+		</section>
+
+		<section class="mt-12">
+			<h2 class="kicker">Education</h2>
+			{
+				education.map((entry) => (
+					<section class="mt-6 border-t border-current pt-4">
+						<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+							<h3 class="headline text-xl">{entry[0]}</h3>
+							<p class="dateline shrink-0">{entry[1]}</p>
+						</div>
+						<p class="mt-2 text-base leading-relaxed">
+							{entry[2]}
+							{entry[3] && (
+								<>
+									{' '}
+									<a class="underline underline-offset-4" href={entry[3]} target="_blank" rel="noopener noreferrer">
+										Read thesis<span class="sr-only"> (opens in a new tab)</span>
+									</a>
+								</>
+							)}
+						</p>
+					</section>
+				))
+			}
+		</section>
+
+		<section class="mt-12">
+			<h2 class="kicker">Tech stack</h2>
+			<ul class="mt-4 list-none space-y-1 p-0 text-base">
+				{techs.map((tech) => <li class="border-t border-current py-2">{tech}</li>)}
+			</ul>
+		</section>
+	</div>
 </BaseLayout>

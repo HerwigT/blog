@@ -1,5 +1,5 @@
 ---
-import BlogPost from '../../components/BlogPost.astro';
+import Story from '../../components/Story.astro';
 import { getPosts } from '../../data/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -20,14 +20,15 @@ const { posts } = Astro.props;
 ---
 
 <BaseLayout pageTitle={`Posts tagged ${tag}`} description={`Posts tagged ${tag}.`}>
-	<h1>Posts tagged with {tag}</h1>
-	<ul class="list-none p-0">
-		{
-			posts.map((post) => (
-				<li>
-					<BlogPost post={post} />
-				</li>
-			))
-		}
-	</ul>
+	<header class="mx-auto mb-10 max-w-3xl border-b border-current pb-6">
+		<p class="kicker">Section</p>
+		<h1 class="headline mt-2 text-5xl">{tag}</h1>
+		<p class="deck mt-3">Posts tagged with {tag}.</p>
+	</header>
+	<div class="mx-auto flex max-w-3xl flex-col gap-10">
+		{posts.map((post) => <Story post={post} />)}
+	</div>
+	<p class="mt-12">
+		<a class="underline underline-offset-4" href="/tags/">All tags</a>
+	</p>
 </BaseLayout>

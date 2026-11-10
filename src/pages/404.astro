@@ -3,6 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout pageTitle="Page not found" description="The page you requested does not exist.">
-	<h1>Page not found</h1>
-	<p>That page isn't here. Try the <a class="text-blue-800 underline dark:text-amber-300" href="/">home page</a> or the <a class="text-blue-800 underline dark:text-amber-300" href="/blog/">blog</a>.</p>
+	<div class="mx-auto max-w-3xl">
+		<p class="kicker">Notice</p>
+		<h1 class="headline mt-3 text-5xl">Page not found</h1>
+		<p class="deck mt-4">That page is not in this edition.</p>
+		<p class="mt-6">
+			<a class="underline underline-offset-4" href="/">Front page</a>
+			<span aria-hidden="true"> · </span>
+			<a class="underline underline-offset-4" href="/blog/">Blog</a>
+		</p>
+	</div>
 </BaseLayout>

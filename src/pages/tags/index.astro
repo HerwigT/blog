@@ -10,16 +10,16 @@ const uniqueTags = [...new Set(allPosts.flatMap((post) => post.frontmatter.tags 
 ---
 
 <BaseLayout pageTitle={pageTitle} description="Posts grouped by topic.">
-	<h1>Tags</h1>
-	<p>Click on a tag to list all blogs with this tag:</p>
-	<ul class="my-4 flex list-none flex-wrap gap-2 p-0">
+	<header class="mx-auto max-w-3xl text-center">
+		<p class="kicker">Index</p>
+		<h1 class="headline mt-2 text-5xl">Tags</h1>
+		<p class="deck mt-3">Click on a tag to list all blogs with this tag.</p>
+	</header>
+	<ul class="mx-auto mt-10 flex max-w-3xl list-none flex-wrap justify-center gap-x-6 gap-y-4 p-0">
 		{
 			uniqueTags.map((tag) => (
 				<li>
-					<a
-						href={`/tags/${encodeURIComponent(tag)}/`}
-						class="rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 no-underline transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-					>
+					<a class="kicker text-base hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
 						{tag}
 					</a>
 				</li>
