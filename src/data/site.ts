@@ -5,6 +5,7 @@ export const siteDescription =
 
 export type MarkdownPost = {
 	url: string;
+	rawContent?: () => string;
 	frontmatter: {
 		title: string;
 		description: string;
@@ -62,20 +63,68 @@ function byDate(a: { frontmatter: { pubDate: string | Date } }, b: { frontmatter
 	return new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf();
 }
 
-export function excerpt(markdown: string, max = 140): string {
-	const text = markdown
+function plainMarkdown(markdown: string): string {
+	return markdown
 		.replace(/```[\s\S]*?```/g, ' ')
 		.replace(/`([^`]+)`/g, '$1')
 		.replace(/!\[[^\]]*]\([^)]*\)/g, '')
 		.replace(/\[([^\]]+)]\([^)]*\)/g, '$1')
-		.replace(/^#{1,6}\s+/gm, '')
-		.replace(/[*~>]/g, '')
-		.replace(/\s+/g, ' ')
-		.trim();
-	if (text.length <= max) return text;
-	const cut = text.slice(0, max);
-	const lastSpace = cut.lastIndexOf(' ');
-	return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+		.replace(/[*~>]/g, '');
+}
+
+function repeats(paragraph: string, skip: string): boolean {
+	const left = paragraph.replace(/\s+/g, ' ').trim().toLowerCase();
+	const right = skip.replace(/\s+/g, ' ').trim().toLowerCase();
+	if (!left || !right) return false;
+	if (left === right) return true;
+	return left.length >= 40 && (right.includes(left) || left.includes(right));
+}
+
+export function excerpt(markdown: string, max?: number): string;
+export function excerpt(
+	markdown: string,
+	options: { words?: number; paragraphs?: number; skip?: string },
+): string;
+export function excerpt(
+	markdown: string,
+	maxOrOptions: number | { words?: number; paragraphs?: number; skip?: string } = 140,
+): string {
+	if (typeof maxOrOptions === 'number') {
+		const text = plainMarkdown(markdown)
+			.replace(/^#{1,6}\s+/gm, '')
+			.replace(/\s+/g, ' ')
+			.trim();
+		if (text.length <= maxOrOptions) return text;
+		const cut = text.slice(0, maxOrOptions);
+		const lastSpace = cut.lastIndexOf(' ');
+		return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+	}
+
+	const wordLimit = maxOrOptions.words ?? 110;
+	const paragraphLimit = maxOrOptions.paragraphs ?? 3;
+	const blocks = plainMarkdown(markdown)
+		.replace(/^#{1,6}\s+.*$/gm, '')
+		.split(/\n\s*\n/)
+		.map((paragraph) => paragraph.replace(/\s+/g, ' ').trim())
+		.filter((paragraph) => paragraph && !repeats(paragraph, maxOrOptions.skip ?? ''));
+
+	const chosen: string[] = [];
+	let count = 0;
+	for (const block of blocks) {
+		if (chosen.length >= paragraphLimit) break;
+		const blockWords = block.split(/\s+/);
+		const room = wordLimit - count;
+		if (blockWords.length <= room || chosen.length === 0) {
+			const take = blockWords.length <= wordLimit ? blockWords : blockWords.slice(0, wordLimit);
+			chosen.push(take.length < blockWords.length ? `${take.join(' ')}…` : block);
+			count += take.length;
+			if (take.length < blockWords.length) break;
+			continue;
+		}
+		if (room >= 12) chosen.push(`${blockWords.slice(0, room).join(' ')}…`);
+		break;
+	}
+	return chosen.join('\n\n');
 }
 
 export function isoDate(input: string | Date): string {

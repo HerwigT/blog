@@ -1,5 +1,5 @@
 ---
-import { formatDate, isoDate } from '../data/site';
+import { excerpt, formatDate, isoDate } from '../data/site';
 
 const { post, heading = 'h2', featured = false } = Astro.props;
 const { title, description, pubDate, tags = [] } = post.frontmatter;
@@ -8,6 +8,12 @@ const kicker = tags[0];
 const titleClass = featured
 	? 'headline mt-2 text-[2.05rem] sm:text-5xl'
 	: 'headline mt-2 text-2xl';
+const opening =
+	featured && typeof post.rawContent === 'function'
+		? excerpt(post.rawContent(), { words: 120, paragraphs: 4, skip: description })
+				.split('\n\n')
+				.filter(Boolean)
+		: [];
 ---
 
 <article class="min-w-0">
@@ -35,6 +41,15 @@ const titleClass = featured
 	<p class="dateline mt-3">
 		<time datetime={published}>{formatDate(pubDate)}</time>
 	</p>
+	{
+		opening.length > 0 && (
+			<div class="mt-4 space-y-4 text-[1.05rem] leading-relaxed">
+				{opening.map((paragraph: string) => (
+					<p>{paragraph}</p>
+				))}
+			</div>
+		)
+	}
 	{
 		featured && (
 			<p class="mt-4">
