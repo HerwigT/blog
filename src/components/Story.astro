@@ -37,7 +37,7 @@ const opening =
 			</h2>
 		)
 	}
-	<p class="deck mt-3">{description}</p>
+	{description && <p class="deck mt-3">{description}</p>}
 	<p class="dateline mt-3">
 		<time datetime={published}>{formatDate(pubDate)}</time>
 	</p>

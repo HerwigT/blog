@@ -25,7 +25,22 @@ const stream = Astro.url.pathname.replace(/\/$/, '') === '/til';
 			extraFeed={{ title: 'Herwig Teufer · Small Print', href: '/til/rss.xml' }}
 		>
 			<article class="mx-auto max-w-[38rem]">
-				<p class="kicker">Today I Learned</p>
+				{
+					tags.length > 0 ? (
+						<p class="kicker">
+							{tags.map((tag: string, index: number) => (
+								<>
+									{index > 0 && <span aria-hidden="true"> · </span>}
+									<a class="hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
+										{tag}
+									</a>
+								</>
+							))}
+						</p>
+					) : (
+						<p class="kicker">Today I Learned</p>
+					)
+				}
 				<h1 class="headline mt-3 text-[2.15rem] sm:text-5xl">{frontmatter.title}</h1>
 				<p class="dateline mt-4">
 					<time datetime={published}>{formatDate(frontmatter.pubDate)}</time>
