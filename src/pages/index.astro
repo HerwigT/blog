@@ -39,16 +39,6 @@ const [latestTil] = getTils(import.meta.glob('./til/*.md', { eager: true }));
 				latestTil && (
 					<div class="mt-8 border-t border-current pt-5">
 						<p class="kicker">Featured</p>
-						{latestTil.frontmatter.tags?.[0] && (
-							<p class="kicker mt-3">
-								<a
-									class="text-inherit no-underline hover:underline"
-									href={`/tags/${encodeURIComponent(latestTil.frontmatter.tags[0])}/`}
-								>
-									{latestTil.frontmatter.tags[0]}
-								</a>
-							</p>
-						)}
 						<h3 class="headline mt-2 text-2xl">
 							<a class="underline underline-offset-4" href={latestTil.url}>
 								{latestTil.frontmatter.title}

@@ -18,15 +18,6 @@ const opening =
 
 <article class="min-w-0">
 	{
-		kicker && (
-			<p class="kicker">
-				<a class="text-inherit no-underline hover:underline" href={`/tags/${encodeURIComponent(kicker)}/`}>
-					{kicker}
-				</a>
-			</p>
-		)
-	}
-	{
 		heading === 'h1' ? (
 			<h1 class={titleClass}>
 				<a href={post.url}>{title}</a>

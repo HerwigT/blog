@@ -49,30 +49,6 @@ const stream = Astro.url.pathname.replace(/\/$/, '') === '/til';
 				<div class="prose til-body mt-6">
 					<slot />
 				</div>
-				{
-					tags.length > 0 && (
-						<div class="mt-10 border-t border-current pt-4">
-							<p class="kicker">Sections</p>
-							<ul class="mt-3 flex list-none flex-wrap gap-x-4 gap-y-2 p-0">
-								{tags.map((tag: string) => (
-									<li>
-										<a class="kicker hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
-											{tag}
-										</a>
-									</li>
-								))}
-							</ul>
-						</div>
-					)
-				}
-				<p class="mt-8 flex flex-wrap gap-x-4 gap-y-2">
-					<a class="underline underline-offset-4" href="/til/">
-						All TILs
-					</a>
-					<a class="underline underline-offset-4" href="/til/rss.xml">
-						TIL feed
-					</a>
-				</p>
 			</article>
 		</BaseLayout>
 	)
