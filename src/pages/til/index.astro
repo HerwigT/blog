@@ -25,24 +25,22 @@ const tils = getTils(import.meta.glob('./*.md', { eager: true }));
 				const published = isoDate(til.frontmatter.pubDate);
 				return (
 					<article class="border-t border-current py-8 first:border-t-0 first:pt-0">
-						<p class="dateline">
-							<time datetime={published}>{formatDate(til.frontmatter.pubDate)}</time>
-						</p>
+						{til.frontmatter.tags?.[0] && (
+							<p class="kicker">
+								<a
+									class="text-inherit no-underline hover:underline"
+									href={`/tags/${encodeURIComponent(til.frontmatter.tags[0])}/`}
+								>
+									{til.frontmatter.tags[0]}
+								</a>
+							</p>
+						)}
 						<h2 class="headline mt-2 text-3xl">
 							<a href={til.url}>{til.frontmatter.title}</a>
 						</h2>
-						{(til.frontmatter.tags ?? []).length > 0 && (
-							<p class="kicker mt-3">
-								{(til.frontmatter.tags ?? []).map((tag: string, index: number) => (
-									<>
-										{index > 0 && <span aria-hidden="true"> · </span>}
-										<a class="hover:underline" href={`/tags/${encodeURIComponent(tag)}/`}>
-											{tag}
-										</a>
-									</>
-								))}
-							</p>
-						)}
+						<p class="dateline mt-3">
+							<time datetime={published}>{formatDate(til.frontmatter.pubDate)}</time>
+						</p>
 						<div class="mt-4">
 							<Content />
 						</div>
